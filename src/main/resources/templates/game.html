@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>SnakeNLadder</title>
+    <meta charset="ISO-8859-1">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+<img id="snake" class="snake" src="/images/snakeNLadder.PNG">
+<div id="roll"  th:object="${gameStatus}">
+    <h3>Current Turn</h3>
+    <p>Player Name : <span th:text="${gameStatus.currentPlayer?.name} ?: ''"></span></p>
+    <p><span th:text="${gameStatus.dice1?.currentValue} ? 'Dice 1 : ': ''" />
+        <span th:text="${gameStatus.dice1?.currentValue} ?: ''"></span></p>
+    <p><span th:text="${gameStatus.dice2?.currentValue} ? 'Dice 2 : ': ''" />
+        <span th:text="${gameStatus.dice2?.currentValue} ?: ''"></span></p>
+    <p><span th:text="${gameStatus.dice1?.currentValue} ? 'Total Moves : ': ''" />
+        <span th:text="${gameStatus.dice1?.currentValue}? ${gameStatus.dice1.currentValue + gameStatus.dice2.currentValue} : ''"> </span></p>
+    <p><span th:text="${gameStatus.dice1?.currentValue} ? 'Player Moved from ': ''"></span>
+        <span th:text="${gameStatus.dice1?.currentValue} ? ${gameStatus.currentPlayer.previousPosition}: ''"></span>
+        <span th:text="${gameStatus.dice1?.currentValue} ? 'To': ''"></span>
+        <span th:text="${gameStatus.dice1?.currentValue} ? ${gameStatus.currentPlayer.currentPosition}: ''"></span>
+    </p>
+</div>
+
+
+<div>
+    <div class="player" th:each="player, iter:${players}">
+        <form action="#" th:action="@{/roll(id=${player.id})}" modelAttribute="box" th:object="${player}"  method="POST">
+            <h2><u><span th:text = "'Player - ' + ${iter.getIndex()  + 1}"></span></u></h2>
+            <p>Name : <span th:text = "${player.name}"></span></p>
+            <p>Current Position : <span th:text = "${player.currentPosition}"></span></p>
+            <button type="submit" th:disabled="${!player.playStatusFlag}">Roll</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="result" th:object="${gameStatus}" th:style="${gameStatus.gameEndFlag} ? 'display : block;' : 'display : none;'">
+    <h3>Result:</h3>
+    <h2><U><span th:text="${gameStatus.currentPlayer?.name} ?: ''"/> has Won the Game</U><i class='fa fa-trophy' style="color :#FFD700;"></i></h2>
+    <form action="#" th:action="@{/}">
+        <button type="submit" th:disabled="${!gameStatus.gameEndFlag}" th:Object="${player}">Start Over</button>
+    </form>
+    <form action="#" th:action="@{/restart}">
+        <button type="submit" th:disabled="${!gameStatus.gameEndFlag}" th:Object="${player}">Restart</button>
+    </form>
+</div>
+</body>
+
+
+<script type="text/javascript">
+window.history.forward();
+    function noBack() {
+        window.history.forward();
+    }
+</script>
+</html>
