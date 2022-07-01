@@ -20,4 +20,6 @@ public interface GameService {
     Map<String, Player> createPlayers(List<String> players, Map<String, Player> playerMap);
     Map<Integer, Snake> initiateSnakes(Map<Integer, Snake> snakes);
     Map<Integer, Ladder> initiateLadders(Map<Integer, Ladder> ladders);
+
+    Map<String, Player> clearPlayerPositions(Map<String, Player> playerMap);
 }

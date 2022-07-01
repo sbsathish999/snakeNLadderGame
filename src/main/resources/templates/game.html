@@ -9,8 +9,10 @@
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
 </head>
-<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="noBack();">
 <img id="snake" class="snake" src="/images/snakeNLadder.PNG">
 <div id="roll"  th:object="${gameStatus}">
     <h3>Current Turn</h3>
@@ -52,12 +54,4 @@
     </form>
 </div>
 </body>
-
-
-<script type="text/javascript">
-window.history.forward();
-    function noBack() {
-        window.history.forward();
-    }
-</script>
 </html>

@@ -17,8 +17,8 @@ public class GameController extends BaseController {
     LinkedHashMap<String, Player> playerMap = new LinkedHashMap<>(4);
     Map<Integer,Snake> snakes = new HashMap<>(4);
     Map<Integer,Ladder> ladders =new HashMap<>(4);
-    static GameStatus gameStatus = null;
-    static Player currentPlayer = null;
+    GameStatus gameStatus = null;
+    Player currentPlayer = null;
 
     @Autowired
     GameService gameService;
@@ -59,7 +59,7 @@ public class GameController extends BaseController {
         ModelAndView mav = new ModelAndView("game");
         gameService.initiateSnakes(snakes);
         gameService.initiateLadders(ladders);
-        clearPlayerPositions();
+        gameService.clearPlayerPositions(playerMap);
         currentPlayer = playerMap.values().stream().findFirst().get();
         currentPlayer.setPlayStatusFlag(true);
         gameStatus = new GameStatus(null, null, currentPlayer, null, false);
@@ -131,12 +131,5 @@ public class GameController extends BaseController {
         snakes = new HashMap<>(4);
         gameStatus = null;
         currentPlayer = null;
-    }
-
-    private void clearPlayerPositions() {
-        for (Player p : playerMap.values()) {
-            p.setCurrentPosition(0);
-            p.setPreviousPosition(0);
-        }
     }
 }

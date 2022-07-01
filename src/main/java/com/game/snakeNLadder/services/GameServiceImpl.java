@@ -28,8 +28,6 @@ public class GameServiceImpl implements GameService{
         Dice dice2 = new Dice(2, dice2Value);
         return new ArrayList<>(Arrays.asList(dice1, dice2));
     }
-
-
     public Player shootBack(Player player, Integer newPosition) {
         Integer totalBackMoves = newPosition - 100;
         newPosition = 100 - totalBackMoves;
@@ -37,7 +35,6 @@ public class GameServiceImpl implements GameService{
         player.setCurrentPosition(newPosition);
         return player;
     }
-
     public Boolean rolledDicesAreDoubles(List<Dice> rolledDices) {
         return rolledDices.get(0).getCurrentValue() == rolledDices.get(1).getCurrentValue();
     }
@@ -138,5 +135,13 @@ public class GameServiceImpl implements GameService{
         ladders.put(ladder10.getBottom(), ladder10);
         ladders.put(ladder11.getBottom(), ladder11);
         return ladders;
+    }
+
+    public Map<String, Player> clearPlayerPositions(Map<String, Player> playerMap) {
+        for (Player p : playerMap.values()) {
+            p.setCurrentPosition(0);
+            p.setPreviousPosition(0);
+        }
+        return playerMap;
     }
 }
